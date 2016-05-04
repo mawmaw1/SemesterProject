@@ -29,6 +29,7 @@
         <script src="app/view3/view3.js"></script>
         <script src="app/view4/view4.js"></script>
         <script src="app/view5/view5.js"></script>
+        <script src="app/view6/view6.js" type="text/javascript"></script>
         <script src="app/viewD/viewD.js"></script>
         <script src="app/components/auth.js"></script>
         <script src="app/components/filters.js"></script>
@@ -69,6 +70,8 @@
                             <!--<li ng-class="{ active: isActive('/viewD')}"><a href="#/viewD">Documentation</a></li>-->
                             <li style="float: left;" ng-class="{ active: isActive('/view5')}"><a href="#/view5"><span class="glyphicon glyphicon-user"></span> Create user</a></li>
                             <li style="float: left;" ng-class="{ active: isActive('/view2')}"><a href="#/view2"><span class="glyphicon glyphicon-map-marker"></span> Flights</a></li>
+                            <li style="float: left;" ng-class="{ active: isActive('/view6')}" ng-show="isUser"><a href="#/view6"><span class="glyphicon glyphicon-align-justify"></span> Reservations</a></li>
+                            <li style="float: left;" ng-class="{ active: isActive('/view3')}" ng-show="isAdmin"><a href="#/view3"><span class="glyphicon glyphicon-map-marker"></span>All Users</a></li>
                             <!--<li style="float: right;" ng-class="{ active: isActive('/view4')}"><a href="#/view4">login</a></li>-->
                             <li style="float: right; padding-top: 3px;" class="nohover">
                                 <div>
@@ -85,7 +88,7 @@
                                     </form>
                                     <div class="navbar-right" ng-show="isAuthenticated" style="padding-top: 7px;">
 
-                                        <label style="color: white;" class="navbar-text">Logged on as: {{username}}</label>
+                                        <label style="color: white;" class="navbar-text">Logged on as: {{user.username}}</label>
 
                                         <button type="submit" style="background-color: #0f71ba;" class="btn btn-primary blubtn"  ng-click="logout()">Logout
                                         </button>

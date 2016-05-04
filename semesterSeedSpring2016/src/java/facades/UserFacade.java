@@ -1,5 +1,7 @@
 package facades;
 
+import entity.Passenger;
+import entity.Reservation;
 import entity.Role;
 import security.IUserFacade;
 import entity.User;
@@ -74,6 +76,24 @@ public class UserFacade implements IUserFacade {
         }
     }
     
+    public Reservation saveReservation(Reservation r) {
+        EntityManager em = emf.createEntityManager();
+        
+        List<Passenger> passengers = r.getPassengers();
+        for (Passenger p : passengers) {
+            p.setReservation(r);
+        }
+       // r.setUser(em.find(User.class, r.getUser().getUserName())); 
+        try {
+            em.getTransaction().begin();
+            em.persist(r);
+            em.getTransaction().commit();
+            return r;
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<entity.User> getUsers() {
         EntityManager em = emf.createEntityManager();
         try {
@@ -81,6 +101,16 @@ public class UserFacade implements IUserFacade {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Reservation> getUserReservation(String username){
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("select r from Reservation r where r.user.userName = :username").setParameter("username", username).getResultList();
+        } finally {
+            em.close();
+        }
+        
     }
    
     

@@ -12,7 +12,9 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http) {
         var self = this;
-
+        
+        self.showSearch = true;
+        self.showBooking = false;
         self.opt = [
             'CPH',
             'STN',
@@ -21,9 +23,16 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
             'BCN'
         ];
 
+        self.bookTickets = function (flight) {
+            console.log(flight);
+            self.flight = flight;
+            self.showme = false;
+            self.showSearch = false;
+            self.showBooking = true;
+        };
 
         self.getAllFlightsFromDate = (function (from, to, date, persons) {
-       
+
             self.showme = false;
             if (to !== from && from !== undefined) {
 
@@ -37,8 +46,8 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
                     GetFactory.getAllFlightsFromDate(from, to, jsonDate, persons).then(function successCallback(res) {
                         self.showme = true;
                         self.data = [];
-                        for(var i=0;i<res.data.length;i++){
-                            if(res.data[i].error === undefined){
+                        for (var i = 0; i < res.data.length; i++) {
+                            if (res.data[i].error === undefined) {
                                 self.data.push(res.data[i]);
                             }
                         }
@@ -83,10 +92,16 @@ app.factory('GetFactory', ['$http', function ($http) {
 
                     });
         });
+
+        var bookTickets = (function (details) {
+            return bookTickets =
+                    $http.post('http://angularairline-plaul.rhcloud.com/api/flightreservation', details);
+        });
+
         return {
             getAllFlightsFromDate: getAllFlightsFromDate,
-            getAllFlightsFromToDate: getAllFlightsFromToDate
-
+            getAllFlightsFromToDate: getAllFlightsFromToDate,
+            bookTickets: bookTickets
         };
 
 

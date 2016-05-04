@@ -8,8 +8,11 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import entity.Passenger;
+import entity.Reservation;
 import facades.UserFacade;
 import httpErrors.NoSeatException;
 import java.io.IOException;
@@ -112,6 +115,41 @@ public class Data {
 
         return gson.toJson(result);
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("reservation/{username}")
+    public String getAllUserReservations(@PathParam("username") String username) throws InterruptedException, ExecutionException, IOException {
+
+        JsonArray result = new JsonArray();
+        List<Reservation> reservations = fc.getUserReservation(username);
+        for (Reservation r : reservations) {
+            JsonObject p1 = new JsonObject();
+            p1.addProperty("id", r.getId());
+            p1.addProperty("flightNumber", r.getFlightNumber());
+            p1.addProperty("origin", r.getOrigin());
+            p1.addProperty("destination", r.getDestination());
+            p1.addProperty("date", r.getDate());
+            p1.addProperty("flightTime", r.getFlightTime());
+            p1.addProperty("numberOfSeats", r.getNumberOfSeats());
+            p1.addProperty("reserveeName", r.getReserveeName());
+
+            JsonArray passengers = new JsonArray();
+            List<Passenger> p = r.getPassengers();
+            for (Passenger pas : p) {
+                JsonObject p2 = new JsonObject();
+                p2.addProperty("firstName", pas.getFirstname());
+                p2.addProperty("lastName", pas.getLastname());
+                passengers.add(p2);
+            }
+            p1.add("passengers", passengers);
+
+            p1.addProperty("username", username);
+
+            result.add(p1);
+        }
+        return gson.toJson(result);
+    }
 
     /**
      * PUT method for updating or creating an instance of Data
@@ -133,6 +171,19 @@ public class Data {
 
         fc.addPerson(u);
         //   return gson.toJson(u);
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/reservation")
+    public String saveReservation(String reservation) throws PasswordStorage.CannotPerformOperationException {       
+        Reservation r = gson.fromJson(reservation, Reservation.class);
+        r = fc.saveReservation(r);
+        //return gson.toJson(r); <- causes StackOverflow error for some reason. Need to build JsonObject manually if we want the object returned.
+        JsonObject status = new JsonObject();
+        status.addProperty("status", "succes");
+        return gson.toJson(status);
     }
 
 

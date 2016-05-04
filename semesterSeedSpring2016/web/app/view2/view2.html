@@ -1,5 +1,5 @@
 <div>
-    <div class="inner divbox">
+    <div class="inner divbox" ng-show="ctrl.showSearch">
         <span style="display: inline-block; width: 17%;">
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-user"></i>
@@ -13,7 +13,7 @@
                 <!--        <option value="STN">STN</option>-->
             </select>
         </span>
-
+       
         <span style="display: inline-block; width: 15%;">
             <select class="form-control" name="singleSelect" ng-model="ctrl.data.to" ng-options="option for option in ctrl.opt">
                 <option value="" disabled="">Select Destination</option>
@@ -53,33 +53,15 @@
             </div>
         </span>
 
-
-
         <span style="display: inline-block; width: 17%;">
             <button ng-click="ctrl.getAllFlightsFromDate(ctrl.data.from, ctrl.data.to, ctrl.inputDate, ctrl.persons)" class="form-control blubtn">Tryk her</button>
-        </span>
-        
+        </span>      
 
     </div>
-
-
-
-<!--        <div>
-            <table class="table table-striped" ng-show="showme" style="background: #b3cccc;">
-                <thead>
-                    <tr>
-                        <th>CVR-number</th>
     
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ctrl.data.airline}}</td>
-    
-                       
-                    </tr>
-                </tbody>
-            </table>-->
+    <div ng-show="ctrl.showBooking">
+        Test hej!
+    </div>
 
     <uib-accordion ng-repeat="d in ctrl.data" ng-show="ctrl.showme">
         <uib-accordion-group heading="{{d.airline}}" style="margin: 1px; background: #e0ebeb;">
@@ -94,11 +76,7 @@
                         <th>origin</th>
                         <th>destination</th>
                         <th>flightNumber</th>
-
-
-
-
-
+                        <th>action</th>
                     </tr>  
                 </thead>
                 <tbody>
@@ -111,13 +89,7 @@
                         <td>{{f.origin}}</td>
                         <td>{{f.destination}}</td>
                         <td>{{f.flightNumber}}</td>
-
-
-
-
-
-
-
+                        <td><button class="form-control blubtn" ng-click="ctrl.bookTickets(f)">Book tickets</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -126,3 +98,4 @@
     </uib-accordion>
 
 </div>
+ {{user}}

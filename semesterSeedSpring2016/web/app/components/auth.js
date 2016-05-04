@@ -1,5 +1,5 @@
 angular.module('myApp.security', [])
-        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, $uibModal, jwtHelper) {
+        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, $uibModal, jwtHelper, InfoFactory) {
 
             $scope.isCollapsed = true;
             
@@ -53,6 +53,8 @@ angular.module('myApp.security', [])
             $scope.login = function () {
                 $http.post('api/login', $scope.user)
                         .success(function (data) {
+                            console.log(InfoFactory.getInfo());
+                            InfoFactory.setUser($scope.user);
                             $window.sessionStorage.id_token = data.token;
                             initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
                             $location.path("#/view1");
