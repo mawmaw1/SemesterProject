@@ -13,6 +13,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http) {
         var self = this;
 
+
         self.opt = [
             'CPH',
             'STN',
@@ -37,8 +38,8 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
                     GetFactory.getAllFlightsFromDate(from, to, jsonDate, persons).then(function successCallback(res) {
                         self.showme = true;
                         self.data = [];
-                        for(var i=0;i<res.data.length;i++){
-                            if(res.data[i].error === undefined){
+                        for (var i = 0; i < res.data.length; i++) {
+                            if (res.data[i].error === undefined) {
                                 self.data.push(res.data[i]);
                             }
                         }

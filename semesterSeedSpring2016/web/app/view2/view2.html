@@ -42,16 +42,16 @@
         <span style="display: inline-block; width: 12%;">
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input id="datepicker-8" type="text" ng-model="ctrl.inputDate" class="form-control" placeholder="Start date">
+                <input type="date" ng-model="ctrl.inputDate" class="form-control" placeholder="Start date">
             </div>
         </span>
 
-        <span style="display: inline-block; width: 12%;">
+<!--        <span style="display: inline-block; width: 12%;">
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input id="datepicker-9" type="text" ng-model="ctrl.inputDate" class="form-control" placeholder="End date">
+                <input id="datepicker-9" type="text" ng-model="ctrl.inputDate1" class="form-control" placeholder="End date">
             </div>
-        </span>
+        </span>-->
 
 
 
@@ -81,8 +81,8 @@
                 </tbody>
             </table>-->
 
-    <uib-accordion ng-repeat="d in ctrl.data" ng-show="showme">
-        <uib-accordion-group heading="{{d.airline}}" style="margin: 1px; background: #e0ebeb;">
+    <div ng-repeat="d in ctrl.data" ng-show="ctrl.showme" style="padding-top: 100px;">
+        <h1 style="margin: 1px; background: #e0ebeb;">{{d.airline}}</h1>
             <table class="table">
                 <thead>
                     <tr>
@@ -102,7 +102,7 @@
                     </tr>  
                 </thead>
                 <tbody>
-                    <tr ng-repeat="f in d.flights">
+                    <tr ng-repeat="f in d.flights.slice().reverse()">
                         <td>{{f.flightID}}</td>
                         <td>{{f.numberOfSeats}}</td>
                         <td>{{f.date | date : 'yyyy-MM-dd HH:mm'}}</td>
@@ -122,7 +122,7 @@
                 </tbody>
             </table>
 
-        </uib-accordion-group>
-    </uib-accordion>
+        
+    </div>
 
 </div>
