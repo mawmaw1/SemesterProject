@@ -76,7 +76,7 @@ public class Data {
 
             }
         } catch (Exception e) {
-            throw new NoSeatException("Sold Out");
+           // throw new NoSeatException("Sold Out");
         }
 
         return gson.toJson(result);

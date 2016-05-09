@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
  */
 public class AirlineConnector {
 
-    private static String[] hostList = {"http://angularairline-plaul.rhcloud.com/api/flightinfo/", "http://angularairline-plaul.rhcloud.com/api/flightinfo/"
+    private static String[] hostList = {"http://angularairline-plaul.rhcloud.com/api/flightinfo/", "http://magnustest.cloudapp.net/api/api/flights/"
     };
 
     
