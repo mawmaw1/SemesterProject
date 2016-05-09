@@ -69,6 +69,7 @@ angular.module('myApp.security', [])
                 $scope.isAuthenticated = false;
                 $scope.isAdmin = false;
                 $scope.isUser = false;
+                InfoFactory.setUser({}); // set User = null -> "user is logged out"
                 delete $window.sessionStorage.id_token;
                 $location.path("/view1");
             };

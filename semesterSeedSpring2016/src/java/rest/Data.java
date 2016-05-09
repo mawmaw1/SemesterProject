@@ -31,6 +31,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import security.PasswordStorage;
 import services.AirlineConnector;
+import services.AirlineResponse;
 
 /**
  * REST Web Service
@@ -44,6 +45,7 @@ public class Data {
     UserFacade fc = new UserFacade();
     AirlineConnector ac = new AirlineConnector();
     JsonResponseChecker jrc = new JsonResponseChecker();
+    AirlineResponse ar = new AirlineResponse();
   
     @Context
     private UriInfo context;
@@ -133,6 +135,7 @@ public class Data {
             p1.addProperty("flightTime", r.getFlightTime());
             p1.addProperty("numberOfSeats", r.getNumberOfSeats());
             p1.addProperty("reserveeName", r.getReserveeName());
+            p1.addProperty("totalPrice", r.getTotalPrice());
 
             JsonArray passengers = new JsonArray();
             List<Passenger> p = r.getPassengers();
@@ -177,13 +180,21 @@ public class Data {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/reservation")
-    public String saveReservation(String reservation) throws PasswordStorage.CannotPerformOperationException {       
+    public String saveReservation(String reservation) {       
         Reservation r = gson.fromJson(reservation, Reservation.class);
         r = fc.saveReservation(r);
         //return gson.toJson(r); <- causes StackOverflow error for some reason. Need to build JsonObject manually if we want the object returned.
         JsonObject status = new JsonObject();
         status.addProperty("status", "succes");
         return gson.toJson(status);
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/reservation/airline")
+    public String getAirlineReservation(String reservation) throws IOException {
+        return ar.getReservationResponse(reservation);
     }
 
 

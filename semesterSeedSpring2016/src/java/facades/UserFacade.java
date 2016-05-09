@@ -83,7 +83,7 @@ public class UserFacade implements IUserFacade {
         for (Passenger p : passengers) {
             p.setReservation(r);
         }
-       // r.setUser(em.find(User.class, r.getUser().getUserName())); 
+        r.setUser(em.find(User.class, r.getUser().getUserName())); 
         try {
             em.getTransaction().begin();
             em.persist(r);
@@ -106,7 +106,7 @@ public class UserFacade implements IUserFacade {
     public List<Reservation> getUserReservation(String username){
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("select r from Reservation r where r.user.userName = :username").setParameter("username", username).getResultList();
+            return em.createQuery("select r from Reservation r where r.user.username = :username").setParameter("username", username).getResultList();
         } finally {
             em.close();
         }

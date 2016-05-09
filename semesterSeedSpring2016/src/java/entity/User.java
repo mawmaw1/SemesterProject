@@ -19,11 +19,11 @@ public class User implements Serializable, IUser {
   private String password;  //Pleeeeease dont store me in plain text
   
   @Id
-  private String userName;
+  private String username;
   
   @ManyToMany
   @JoinTable(name = "SystemUser_USERROLE", joinColumns = {
-  @JoinColumn(name = "userName", referencedColumnName = "userName")}, inverseJoinColumns = {
+  @JoinColumn(name = "username", referencedColumnName = "username")}, inverseJoinColumns = {
   @JoinColumn(name = "roleName")})
   private List<Role> roles = new ArrayList();
 
@@ -31,7 +31,7 @@ public class User implements Serializable, IUser {
   }
 
   public User(String userName, String password) {
-    this.userName = userName;
+    this.username = userName;
     this.password = password;
   }
 
@@ -63,11 +63,11 @@ public class User implements Serializable, IUser {
 
   @Override
   public String getUserName() {
-    return userName;
+    return username;
   }
 
   public void setUserName(String userName) {
-    this.userName = userName;
+    this.username = userName;
   }
    
 }

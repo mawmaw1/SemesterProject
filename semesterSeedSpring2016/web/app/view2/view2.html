@@ -13,7 +13,7 @@
                 <!--        <option value="STN">STN</option>-->
             </select>
         </span>
-       
+
         <span style="display: inline-block; width: 15%;">
             <select class="form-control" name="singleSelect" ng-model="ctrl.data.to" ng-options="option for option in ctrl.opt">
                 <option value="" disabled="">Select Destination</option>
@@ -58,9 +58,34 @@
         </span>      
 
     </div>
-    
+
     <div ng-show="ctrl.showBooking">
-        Test hej!
+        <center>
+            Reservee name:
+            <input type="text" ng-model="ctrl.reservation.reserveeName"> <br>
+            Reservee phone:
+            <input type="text" ng-model="ctrl.reservation.reservePhone"> <br>
+            Reservee email:
+            <input type="text" ng-model="ctrl.reservation.reserveeEmail"> <br>
+            Passengers:<br><br>
+            Number of passengers to add: {{ctrl.repeat}}
+            <br>
+            First name:
+            <input type="text" ng-model="ctrl.passenger.firstName">  <br>
+            Last name:
+            <input type="text" ng-model="ctrl.passenger.lastName"> <br>
+            <button class="form-control blubtn" ng-click="ctrl.addPassenger()" style="width: 17%;">Add passenger</button>
+
+            <button class="form-control blubtn" ng-click="ctrl.bookTickets()" style="width: 17%;">Book tickets</button>
+        </center>
+
+    </div>
+    
+    <div ng-show="ctrl.showSucces">
+        <center>
+            You have succesfully reserved your tickets. Go to the Reservation tab to see your flight details.
+        </center>
+
     </div>
 
     <uib-accordion ng-repeat="d in ctrl.data" ng-show="ctrl.showme">
@@ -83,13 +108,13 @@
                     <tr ng-repeat="f in d.flights">
                         <td>{{f.flightID}}</td>
                         <td>{{f.numberOfSeats}}</td>
-                        <td>{{f.date | date : 'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{f.date| date : 'yyyy-MM-dd HH:mm'}}</td>
                         <td>{{f.totalPrice}}</td>
                         <td>{{f.traveltime}}</td>
                         <td>{{f.origin}}</td>
                         <td>{{f.destination}}</td>
                         <td>{{f.flightNumber}}</td>
-                        <td><button class="form-control blubtn" ng-click="ctrl.bookTickets(f)">Book tickets</button></td>
+                        <td><button class="form-control blubtn" ng-click="ctrl.bookTicketsInfo(f)">Book tickets</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -98,4 +123,3 @@
     </uib-accordion>
 
 </div>
- {{user}}
