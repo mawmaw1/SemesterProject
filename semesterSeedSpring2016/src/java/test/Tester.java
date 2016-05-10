@@ -5,6 +5,7 @@
  */
 package test;
 
+import entity.Airline;
 import entity.Reservation;
 import facades.UserFacade;
 import java.util.ArrayList;
@@ -17,9 +18,11 @@ import java.util.List;
 public class Tester {
     public static void main(String[] args) {
         UserFacade uf = new UserFacade();
-        List<Reservation> r = uf.getUserReservation("user");
-        for (Reservation r1 : r) {
-            System.out.println(r1.getDate());
-        }
+//        List<Airline> u = uf.getAllAirlineURL();
+//        for (Airline u1 : u) {
+//            System.out.println(u1.getUrl());
+//        }
+        uf.deleteReservation(1);
+        
     }
 }

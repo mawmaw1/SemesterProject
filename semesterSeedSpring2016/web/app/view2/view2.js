@@ -26,8 +26,9 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
             'BCN'
         ];
 
-        self.bookTicketsInfo = function (flight) {
+        self.bookTicketsInfo = function (flight, airlineName) {
             console.log(flight);
+            console.log(airlineName);
             var currentUser = InfoFactory.getUser();
             if ((Object.getOwnPropertyNames(currentUser).length === 0) === true) {
                 alert("You have to log in to book tickets");
@@ -40,6 +41,7 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
                 self.reservation.flightID = self.flight.flightID;
                 self.reservation.numberOfSeats = self.flight.numberOfSeats;
                 self.repeat = self.flight.numberOfSeats;
+                self.airlineName = airlineName;
             }
         };
 
@@ -51,11 +53,12 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
             var currentUser = InfoFactory.getUser();
             console.log(self.reservation);
 
-            GetFactory1.bookTickets(self.reservation).then(function successCallback(res) {
+            GetFactory1.bookTickets(self.reservation, self.airlineName, self.flight.flightID).then(function successCallback(res) {
                 console.log(res.data);
                 self.reservationResponse = res.data;
                 self.reservationResponse.totalPrice = self.flight.totalPrice;
                 self.reservationResponse.user = currentUser;
+                self.reservationResponse.airlineName = self.airlineName;
                 console.log(self.reservationResponse);
                 GetFactory1.saveReservation(self.reservationResponse).then(function successCallback(res) {
                     console.log("succes");
@@ -67,9 +70,7 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
             }, function errorCallback(res) {
                 self.error = res.status + ": " + res.data.statusText;
             });
-
-
-
+            
             self.showBooking = false;
             self.showSucces = true;
 
@@ -101,11 +102,13 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
                     GetFactory1.getAllFlightsFromDate(from, to, jsonDate, persons).then(function successCallback(res) {
                         self.showme = true;
                         self.data = [];
-                        for (var i = 0; i < res.data.length; i++) {
-                            if (res.data[i].error === undefined) {
-                                self.data.push(res.data[i]);
-                            }
-                        }
+                        console.log(res.data);
+//                        for (var i = 0; i < res.data.length; i++) {
+//                            if (res.data[i].error === undefined) {
+//                                self.data.push(res.data[i]);
+//                            }
+//                        }
+                        self.data = res.data;
                     }, function errorCallback(res) {
                         self.error = res.status + ": " + res.data.statusText;
                     });
@@ -148,9 +151,10 @@ app.factory('GetFactory1', ['$http', function ($http) {
                     });
         });
 
-        var bookTickets = (function (details) {
+        var bookTickets = (function (details, airline, flightID) {
             return bookTickets =
-                    $http.post('api/data/reservation/airline', details);
+//                    $http.post('api/data/reservation/airline', details);
+                    $http.post('api/data/reservation/' + airline+"/"+flightID, details);
         });
 
         var saveReservation = (function (reservation) {

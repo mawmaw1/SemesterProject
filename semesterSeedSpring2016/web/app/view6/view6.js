@@ -15,12 +15,12 @@ app.controller('View6Ctrl', ["$http", "$location", "GetFactory", "$scope", "Info
         var user = InfoFactory.getUser();
         console.log(user.username);
         self.getAllReservations = function (username) {
-            GetFactory.getAllReservations(username).then(function successCallback(res) {                      
-                        self.data = res.data;
-                        console.log(self.data);                        
-                    }, function errorCallback(res) {
-                        self.error = res.status + ": " + res.data.statusText;
-                    });
+            GetFactory.getAllReservations(username).then(function successCallback(res) {
+                self.data = res.data;
+                console.log(self.data);
+            }, function errorCallback(res) {
+                self.error = res.status + ": " + res.data.statusText;
+            });
         };
         self.getAllReservations(user.username);
 
@@ -29,19 +29,21 @@ app.controller('View6Ctrl', ["$http", "$location", "GetFactory", "$scope", "Info
 
 app.filter("pasFilter", [function () {
         return function (inputItem) {
-            
-            var res = "";
-            for (var i = 0; i < inputItem.length; i++) {
-                if (inputItem[i] === inputItem[inputItem.length-1]) {
-                    res += inputItem[i].firstName + " " + inputItem[i].lastName;
-                }
-                else {
-                    res += inputItem[i].firstName + " " + inputItem[i].lastName + ", ";
-                }
-                
-            }
-            return res;
 
+            var res = "";
+            if (inputItem) {
+
+                for (var i = 0; i < inputItem.length; i++) {
+                    if (inputItem[i] === inputItem[inputItem.length - 1]) {
+                        res += inputItem[i].firstName + " " + inputItem[i].lastName;
+                    }
+                    else {
+                        res += inputItem[i].firstName + " " + inputItem[i].lastName + ", ";
+                    }
+
+                }
+                return res;
+            }
         };
     }]);
 

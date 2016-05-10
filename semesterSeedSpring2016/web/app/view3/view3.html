@@ -1,30 +1,71 @@
-<h2>All users</h2>
-<table class="table table-striped">
-          <thead>
-              <tr>
-                  <th>
-                      Username
-                  </th>
-                  <th>
-                      Roles
-                  </th>
-                  <th>
-                      Action
-                  </th>
-                 
-              </tr>
-          </thead>
-          <tbody>
-              <tr ng-repeat="d in ctrl.data">
-                  <td>
-                      {{d.username}}
-                  </td>
-                  <td >
-                      {{d.roles | roleFilter}}
-                  </td>
-                  <td>
-                      <a href="#/view3" ng-click="ctrl.deleteUser(d.username)">delete</a>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
+<button class="form-control blubtn" ng-click="ctrl.showUsersFunc()" style="width: 15%; display: inline-block">Show all users</button>
+<button class="form-control blubtn" ng-click="ctrl.showReservationsFunc()" style="width: 15%; display: inline-block">Show all reservations</button>
+<div ng-show="ctrl.showUsers">
+    <h2>All users</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Roles
+                </th>
+                <th>
+                    Action
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="d in ctrl.data">
+                <td>
+                    {{d.username}}
+                </td>
+                <td >
+                    {{d.roles| roleFilter}}
+                </td>
+                <td>
+                    <a href="#/view3" ng-click="ctrl.deleteUser(d.username)">delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div ng-show="ctrl.showReservations">
+    <h2>All reservations</h2>
+    <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>flightNumber</th>
+                        <th>numberOfSeats</th>
+                        <th>date (Local time in Denmark)</th>
+                        <th>totalPrice</th>
+                        <th>flightTime</th>
+                        <th>origin</th>
+                        <th>destination</th>
+                        <th>Reservee name</th>
+                        <th>Passengers</th>
+                        <th>Action</th>
+                    </tr>  
+                </thead>
+                <tbody>
+                    <tr ng-repeat="d in ctrl.data2"> <!-- ng-repeat="f in d.flights"-->
+                        <td>{{d.flightNumber}}</td>
+                        <td>{{d.numberOfSeats}}</td>
+                        <td>{{d.date | date : 'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{d.totalPrice}}</td>
+                        <td>{{d.flightTime}}</td>
+                        <td>{{d.origin}}</td>
+                        <td>{{d.destination}}</td>
+                        <td>{{d.reserveeName}}</td>
+                        <td>{{d.passengers | pasFilter}}</td>
+                        <td>
+                            <a href="#/view3" ng-click="ctrl.deleteReservation(d.id)">delete</a>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+</div>
