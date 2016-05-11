@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entity.Passenger;
 import entity.Reservation;
+import entity.SearchData;
 import facades.UserFacade;
 import httpErrors.NoSeatException;
 import java.io.IOException;
@@ -78,18 +79,18 @@ public class Data {
             for (Future<String> list1 : list) {
 
                 JsonObject jsonObject = (new JsonParser()).parse(list1.get()).getAsJsonObject();
-
                 //result.add(jsonObject);
                 if (jrc.checkJson(jsonObject) == true) {
                     result.add(jsonObject);
                 }
 
-           }
+           }        
         } 
         catch (Exception e) {
-           // throw new NoSeatException("Sold Out");
+            if (result.size() == 0) {
+                throw new NoSeatException("No flights are flying from this date and origin.");
+            }
         }
-
         return gson.toJson(result);
     }
 
@@ -113,13 +114,14 @@ public class Data {
                 //result.add(jsonObject);
                 if (jrc.checkJson(jsonObject) == true) {
                     result.add(jsonObject);
-                }
+                } 
 
             }
         } catch (Exception e) {
-            throw new NoSeatException("Sold Out");
+            if (result.size() == 0) {
+                throw new NoSeatException("No flights are flying from this date and origin.");
+            }
         }
-
         return gson.toJson(result);
     }
 
@@ -188,6 +190,18 @@ public class Data {
         Reservation r = gson.fromJson(reservation, Reservation.class);
         r = fc.saveReservation(r);
         //return gson.toJson(r); <- causes StackOverflow error for some reason. Need to build JsonObject manually if we want the object returned.
+        JsonObject status = new JsonObject();
+        status.addProperty("status", "succes");
+        return gson.toJson(status);
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/searchData")
+    public String saveSearchData(String SearchData) {
+        SearchData sd = gson.fromJson(SearchData, SearchData.class);
+        sd = fc.saveSearchData(sd);
         JsonObject status = new JsonObject();
         status.addProperty("status", "succes");
         return gson.toJson(status);

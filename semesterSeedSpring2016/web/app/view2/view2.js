@@ -89,6 +89,16 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
 
 
         self.getAllFlightsFromDate = (function (from, to, date, persons) {
+            self.searchData = {};
+            self.searchData.origin = from;
+            self.searchData.destination = to;
+            self.searchData.date = date;
+            self.searchData.numberOfSeats = persons;
+            GetFactory1.saveSearchData(self.searchData).then(function successCallback(res) {
+                    console.log(res.data);
+                    }, function errorCallback(res) {
+                        self.error = res.status + ": " + res.data.statusText;
+                    });
 
             self.showme = false;
             if (to !== from && from !== undefined) {
@@ -161,11 +171,18 @@ app.factory('GetFactory1', ['$http', function ($http) {
             return saveReservation =
                     $http.post('api/data/reservation', reservation);
         });
+        
+        var saveSearchData = (function (searchData) {
+            return saveSearchData =
+                    $http.post('api/data/searchData', searchData);
+        });
+        
         return {
             getAllFlightsFromDate: getAllFlightsFromDate,
             getAllFlightsFromToDate: getAllFlightsFromToDate,
             bookTickets: bookTickets,
-            saveReservation: saveReservation
+            saveReservation: saveReservation,
+            saveSearchData: saveSearchData
         };
 
 

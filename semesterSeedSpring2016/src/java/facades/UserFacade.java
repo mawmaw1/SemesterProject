@@ -4,6 +4,7 @@ import entity.Airline;
 import entity.Passenger;
 import entity.Reservation;
 import entity.Role;
+import entity.SearchData;
 import security.IUserFacade;
 import entity.User;
 import java.util.ArrayList;
@@ -92,6 +93,18 @@ public class UserFacade implements IUserFacade {
             em.persist(r);
             em.getTransaction().commit();
             return r;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public SearchData saveSearchData(SearchData sd) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(sd);
+            em.getTransaction().commit();
+            return sd;
         } finally {
             em.close();
         }
