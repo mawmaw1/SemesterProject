@@ -10,10 +10,14 @@ app.config(['$routeProvider', function ($routeProvider) {
 
     }]);
 
-app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http) {
+app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (GetFactory1, InfoFactory, $http) {
         var self = this;
+        self.repeat;
 
-
+        self.reservation = {};
+        self.reservation.passengers = [];
+        self.showSearch = true;
+        self.showBooking = false;
         self.opt = [
             'CPH',
             'STN',
@@ -21,6 +25,66 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
             'CDG',
             'BCN'
         ];
+
+        self.bookTicketsInfo = function (flight) {
+            console.log(flight);
+            var currentUser = InfoFactory.getUser();
+            if ((Object.getOwnPropertyNames(currentUser).length === 0) === true) {
+                alert("You have to log in to book tickets");
+            } else {
+                self.flight = flight;
+                self.showme = false;
+                self.showSearch = false;
+                self.showBooking = true;
+                self.showSucces = false;
+                self.reservation.flightID = self.flight.flightID;
+                self.reservation.numberOfSeats = self.flight.numberOfSeats;
+                self.repeat = self.flight.numberOfSeats;
+            }
+        };
+
+//        self.getRepeat = function (number){
+//            return new Array(number);
+//        };
+
+        self.bookTickets = function () {
+            var currentUser = InfoFactory.getUser();
+            console.log(self.reservation);
+
+            GetFactory1.bookTickets(self.reservation).then(function successCallback(res) {
+                console.log(res.data);
+                self.reservationResponse = res.data;
+                self.reservationResponse.totalPrice = self.flight.totalPrice;
+                self.reservationResponse.user = currentUser;
+                console.log(self.reservationResponse);
+                GetFactory1.saveReservation(self.reservationResponse).then(function successCallback(res) {
+                    console.log("succes");
+                }, function errorCallback(res) {
+                    self.error = res.status + ": " + res.data.statusText;
+                });
+
+
+            }, function errorCallback(res) {
+                self.error = res.status + ": " + res.data.statusText;
+            });
+
+
+
+            self.showBooking = false;
+            self.showSucces = true;
+
+        };
+
+        self.addPassenger = function () {
+            if (self.repeat === 0) {
+                alert("You cannot add more passengers than number of seats");
+                self.passenger = {};
+            } else {
+                self.reservation.passengers.push(self.passenger);
+                self.passenger = {};
+                self.repeat = self.repeat - 1;
+            }
+        };
 
 
         self.getAllFlightsFromDate = (function (from, to, date, persons) {
@@ -34,8 +98,7 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
 
                 if (to === undefined) {
 
-
-                    GetFactory.getAllFlightsFromDate(from, to, jsonDate, persons).then(function successCallback(res) {
+                    GetFactory1.getAllFlightsFromDate(from, to, jsonDate, persons).then(function successCallback(res) {
                         self.showme = true;
                         self.data = [];
                         for (var i = 0; i < res.data.length; i++) {
@@ -47,7 +110,7 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
                         self.error = res.status + ": " + res.data.statusText;
                     });
                 } else {
-                    GetFactory.getAllFlightsFromToDate(from, to, jsonDate, persons).then(function successCallback(res) {
+                    GetFactory1.getAllFlightsFromToDate(from, to, jsonDate, persons).then(function successCallback(res) {
                         self.showme = true;
                         self.data = res.data;
 
@@ -65,14 +128,14 @@ app.controller('View2Ctrl', ['GetFactory', '$http', function (GetFactory, $http)
 
     }]);
 
-app.factory('GetFactory', ['$http', function ($http) {
+app.factory('GetFactory1', ['$http', function ($http) {
         var self = this;
 
         var getAllFlightsFromDate = (function (from, to, date, persons) {
             return getAllFlightsFromDate =
                     $http({
                         method: 'GET',
-                        url: 'http://localhost:8080/SemesterProjectServer/api/data/' + from + '/' + date + '/' + persons
+                        url: 'api/data/' + from + '/' + date + '/' + persons
 
                     });
         });
@@ -80,14 +143,25 @@ app.factory('GetFactory', ['$http', function ($http) {
             return getAllFlightsFromToDate =
                     $http({
                         method: 'GET',
-                        url: 'http://localhost:8080/SemesterProjectServer/api/data/' + from + '/' + to + '/' + date + '/' + persons
+                        url: 'api/data/' + from + '/' + to + '/' + date + '/' + persons
 
                     });
         });
+
+        var bookTickets = (function (details) {
+            return bookTickets =
+                    $http.post('api/data/reservation/airline', details);
+        });
+
+        var saveReservation = (function (reservation) {
+            return saveReservation =
+                    $http.post('api/data/reservation', reservation);
+        });
         return {
             getAllFlightsFromDate: getAllFlightsFromDate,
-            getAllFlightsFromToDate: getAllFlightsFromToDate
-
+            getAllFlightsFromToDate: getAllFlightsFromToDate,
+            bookTickets: bookTickets,
+            saveReservation: saveReservation
         };
 
 

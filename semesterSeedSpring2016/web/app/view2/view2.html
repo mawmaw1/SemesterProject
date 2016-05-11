@@ -1,5 +1,5 @@
 <div>
-    <div class="inner divbox">
+    <div class="inner divbox" ng-show="ctrl.showSearch">
         <span style="display: inline-block; width: 17%;">
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-user"></i>
@@ -28,7 +28,7 @@
                             nextText: "click for next months",
                             showOtherMonths: true,
                             selectOtherMonths: false,
-                            dateFormat: "dd-mm-yy"
+                            //dateFormat: "yy-mm-dd"
                         });
                         $("#datepicker-9").datepicker({
                             prevText: "click for previous months",
@@ -42,44 +42,49 @@
         <span style="display: inline-block; width: 12%;">
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input type="date" ng-model="ctrl.inputDate" class="form-control" placeholder="Start date">
+                <input  type="date" ng-model="ctrl.inputDate" class="form-control" placeholder="Start date">
             </div>
         </span>
 
 <!--        <span style="display: inline-block; width: 12%;">
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input id="datepicker-9" type="text" ng-model="ctrl.inputDate1" class="form-control" placeholder="End date">
+                <input id="datepicker-9" type="text" ng-model="ctrl.inputDate2" class="form-control" placeholder="End date">
             </div>
         </span>-->
 
-
-
         <span style="display: inline-block; width: 17%;">
             <button ng-click="ctrl.getAllFlightsFromDate(ctrl.data.from, ctrl.data.to, ctrl.inputDate, ctrl.persons)" class="form-control blubtn">Tryk her</button>
-        </span>
-        
+        </span>      
 
     </div>
 
+    <div ng-show="ctrl.showBooking">
+        <center>
+            Reservee name:
+            <input type="text" ng-model="ctrl.reservation.reserveeName"> <br>
+            Reservee phone:
+            <input type="text" ng-model="ctrl.reservation.reservePhone"> <br>
+            Reservee email:
+            <input type="text" ng-model="ctrl.reservation.reserveeEmail"> <br>
+            Passengers:<br><br>
+            Number of passengers to add: {{ctrl.repeat}}
+            <br>
+            First name:
+            <input type="text" ng-model="ctrl.passenger.firstName">  <br>
+            Last name:
+            <input type="text" ng-model="ctrl.passenger.lastName"> <br>
+            <button class="form-control blubtn" ng-click="ctrl.addPassenger()" style="width: 17%;">Add passenger</button>
 
+            <button class="form-control blubtn" ng-click="ctrl.bookTickets()" style="width: 17%;">Book tickets</button>
+        </center>
 
-    <!--    <div>
-            <table class="table table-striped" ng-show="showme" style="background: #b3cccc;">
-                <thead>
-                    <tr>
-                        <th>CVR-number</th>
+    </div>
     
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ctrl.data.airline}}</td>
-    
-                        <td>Aktiv</td>
-                    </tr>
-                </tbody>
-            </table>-->
+    <div ng-show="ctrl.showSucces">
+        <center>
+            You have succesfully reserved your tickets. Go to the Reservation tab to see your flight details.
+        </center>
 
     <div ng-repeat="d in ctrl.data" ng-show="ctrl.showme" style="padding-top: 100px;">
         <h1 style="margin: 1px; background: #e0ebeb;">{{d.airline}}</h1>
@@ -94,30 +99,20 @@
                         <th>origin</th>
                         <th>destination</th>
                         <th>flightNumber</th>
-
-
-
-
-
+                        <th>action</th>
                     </tr>  
                 </thead>
                 <tbody>
                     <tr ng-repeat="f in d.flights.slice().reverse()">
                         <td>{{f.flightID}}</td>
                         <td>{{f.numberOfSeats}}</td>
-                        <td>{{f.date | date : 'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{f.date| date : 'yyyy-MM-dd HH:mm'}}</td>
                         <td>{{f.totalPrice}}</td>
                         <td>{{f.traveltime}}</td>
                         <td>{{f.origin}}</td>
                         <td>{{f.destination}}</td>
                         <td>{{f.flightNumber}}</td>
-
-
-
-
-
-
-
+                        <td><button class="form-control blubtn" ng-click="ctrl.bookTicketsInfo(f)">Book tickets</button></td>
                     </tr>
                 </tbody>
             </table>

@@ -18,7 +18,7 @@ angular.module('myApp.view5', ['ngRoute'])
                     $http.post("api/data/create", self.user).success(function () {
                         console.log(self.user);
                         self.user = {};
-                        $location.path('/app/view1.html')
+                        $location.path('/app/view1.html');
                     });
 
                 };
