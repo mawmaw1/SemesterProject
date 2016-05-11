@@ -1,6 +1,7 @@
 
 var app = angular.module('myApp.view2', ['ngRoute', 'ui.bootstrap']);
 
+
 app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/view2', {
             templateUrl: 'app/view2/view2.html',
@@ -25,6 +26,7 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
             'CDG',
             'BCN'
         ];
+
 
         self.bookTicketsInfo = function (flight) {
             console.log(flight);

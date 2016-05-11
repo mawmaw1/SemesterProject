@@ -8,9 +8,66 @@
         </span>
 
         <span style="display: inline-block; width: 15%;">
-            <select class="form-control" ng-model="ctrl.data.from" ng-options="option for option in ctrl.opt">
+            <select class="form-control" ng-model="ctrl.data.from">
                 <option value="" disabled="">Select Origin</option>
-                <!--        <option value="STN">STN</option>-->
+                <option value="CPH">Copenhagen</option>
+                <option value="STN">Stansted, London</option>
+                <option value="ATL">Atlanta</option>
+                <option value="PEK">Beijing, China</option>
+                <option value="DXB">Dubai</option>
+                <option value="ORD">Chicago</option>
+                <option value="HND">Tokyo</option>
+                <option value="LHR">Heathrow, London</option>
+                <option value="LAX">Los Angeles</option>
+                <option value="HKG">Hong Kong</option>
+                <option value="CDG">Paris</option>
+                <option value="DFW">Dallas</option>
+                <option value="IST">Istanbul</option>
+                <option value="FRA">Frankfurt</option>
+                <option value="PVG">Shanghai, China</option>
+                <option value="AMS">Amsterdam</option>
+                <option value="JFK">New York</option>
+                <option value="SIN">Singapore</option>
+                <option value="CAN">Guangzhou Baiyun, China</option>
+                <option value="CGK">Indonesia</option>
+                <option value="DEN">Denver</option>
+                <option value="BKK">Suvarnabhumi, Thailand</option>
+                <option value="SFO">San Francisco</option>
+                <option value="ICN">Seoul</option>
+                <option value="KUL">Kuala Lumpur</option>
+                <option value="MAD">Madrid</option>
+                <option value="DEL">Delhi</option>
+                <option value="LAS">Las Vegas</option>
+                <option value="CLT">Charlotte</option>
+                <option value="MIA">Miami</option>
+                <option value="PHX">Phoenix</option>
+                <option value="IAH">Houston</option>
+                <option value="SEA">Seattle</option>
+                <option value="CTU">Shuangliu, China</option>
+                <option value="YYZ">Toronto</option>
+                <option value="MUC">Munich</option>
+                <option value="BOM">Mumbai</option>
+                <option value="FCO">Fiumicino</option>
+                <option value="LGW">Gatwick, London</option>
+                <option value="SYD">Sydney</option>
+                <option value="SZX">Shenzhen, China</option>
+                <option value="BCN">Barcelona</option>
+                <option value="GRU">São Paulo</option>
+                <option value="SHA">Changning-Minhang, China</option>
+                <option value="MCO">Orlando</option>
+                <option value="TPE">Taiwan</option>
+                <option value="MEX">Mexico City</option>
+                <option value="KMG">Yunnan, China</option>
+                <option value="EWR">Newark</option>
+                <option value="NRT">Narita</option>
+                <option value="MNL">Manila</option>
+                <option value="MSP">Minneapolis</option>
+                <option value="FAE">Faroe Islands</option>
+                <option value="GOH">Nuuk</option>
+                <option value="KEF">Keflavík</option>
+                <option value="OSL">Oslo</option>
+                <option value="ARN">Stockholm</option>
+                
             </select>
         </span>
 
@@ -23,35 +80,34 @@
 
         <script>
                     $(function () {
-                        $("#datepicker-8").datepicker({
-                            prevText: "click for previous months",
-                            nextText: "click for next months",
-                            showOtherMonths: true,
-                            selectOtherMonths: false,
-                            //dateFormat: "yy-mm-dd"
+                        $("#datepicker-8").datetimepicker({
                         });
                         $("#datepicker-9").datepicker({
                             prevText: "click for previous months",
                             nextText: "click for next months",
                             showOtherMonths: true,
                             selectOtherMonths: true,
-                            dateFormat: "dd-mm-yy"
+                            dateFormat: "yyyy-MM-dd HH:mm"
                         });
                     });
         </script>
         <span style="display: inline-block; width: 12%;">
-            <div class="inner-addon left-addon">
+            <div class="inner-addon left-addon date">
                 <i class="glyphicon glyphicon-calendar"></i>
-                <input  type="date" ng-model="ctrl.inputDate" class="form-control" placeholder="Start date">
+                <input type="date" ng-model="ctrl.inputDate" class="form-control">
             </div>
         </span>
+        
 
-<!--        <span style="display: inline-block; width: 12%;">
-            <div class="inner-addon left-addon">
-                <i class="glyphicon glyphicon-calendar"></i>
-                <input id="datepicker-9" type="text" ng-model="ctrl.inputDate2" class="form-control" placeholder="End date">
-            </div>
-        </span>-->
+
+
+
+        <!--        <span style="display: inline-block; width: 12%;">
+                    <div class="inner-addon left-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <input id="datepicker-9" type="text" ng-model="ctrl.inputDate2" class="form-control" placeholder="End date">
+                    </div>
+                </span>-->
 
         <span style="display: inline-block; width: 17%;">
             <button ng-click="ctrl.getAllFlightsFromDate(ctrl.data.from, ctrl.data.to, ctrl.inputDate, ctrl.persons)" class="form-control blubtn">Tryk her</button>
@@ -60,64 +116,85 @@
     </div>
 
     <div ng-show="ctrl.showBooking">
-        <center>
-            Reservee name:
-            <input type="text" ng-model="ctrl.reservation.reserveeName"> <br>
-            Reservee phone:
-            <input type="text" ng-model="ctrl.reservation.reservePhone"> <br>
-            Reservee email:
-            <input type="text" ng-model="ctrl.reservation.reserveeEmail"> <br>
-            Passengers:<br><br>
-            Number of passengers to add: {{ctrl.repeat}}
-            <br>
-            First name:
-            <input type="text" ng-model="ctrl.passenger.firstName">  <br>
-            Last name:
-            <input type="text" ng-model="ctrl.passenger.lastName"> <br>
-            <button class="form-control blubtn" ng-click="ctrl.addPassenger()" style="width: 17%;">Add passenger</button>
+        <form class="form-signin">
+            <div class="row">
+                <div class="col-md-6" style="width: 50%;">
+                    <label class="control-label">Reservee information:</label>
+                    <br>
+                    <input class="form-control" type="text" ng-model="ctrl.reservation.reserveeName" placeholder="Reservee name">
+                    <br>
+                    <input class="form-control" type="text" ng-model="ctrl.reservation.reservePhone" placeholder="Reservee phone">
+                    <br>
+                    <input class="form-control" type="email" ng-model="ctrl.reservation.reserveeEmail" placeholder="Reservee email">
 
-            <button class="form-control blubtn" ng-click="ctrl.bookTickets()" style="width: 17%;">Book tickets</button>
-        </center>
+                </div>
+                <div class="col-md-6" style="width: 50%;">
+                    <label class="control-label">Passengers:</label>
+                    <br>
+                    <input class="form-control" type="text" ng-model="ctrl.passenger.firstName" placeholder="First name">
+                    <br>
+                    <input class="form-control" type="text" ng-model="ctrl.passenger.lastName" placeholder="Last name">
+                    <br>
+                    <label class="control-label">Number of passengers to add: {{ctrl.repeat}}</label>
+                </div>
+
+
+            </div>
+            <br>
+            <br>
+            <div style="width: 50%; margin: auto">
+                <button class="form-control blubtn" ng-click="ctrl.addPassenger()">Add passenger</button>
+                <br>
+                <button class="form-control blubtn" ng-click="ctrl.bookTickets()">Book tickets</button>
+            </div>
+
+        </form>
+
+
 
     </div>
-    
+
+
+
     <div ng-show="ctrl.showSucces">
         <center>
             You have succesfully reserved your tickets. Go to the Reservation tab to see your flight details.
         </center>
 
-    <div ng-repeat="d in ctrl.data" ng-show="ctrl.showme" style="padding-top: 100px;">
-        <h1 style="margin: 1px; background: #e0ebeb;">{{d.airline}}</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>flightID</th>
-                        <th>numberOfSeats</th>
-                        <th>date (Local time in Denmark)</th>
-                        <th>totalPrice</th>
-                        <th>travelTime</th>
-                        <th>origin</th>
-                        <th>destination</th>
-                        <th>flightNumber</th>
-                        <th>action</th>
-                    </tr>  
-                </thead>
-                <tbody>
-                    <tr ng-repeat="f in d.flights.slice().reverse()">
-                        <td>{{f.flightID}}</td>
-                        <td>{{f.numberOfSeats}}</td>
-                        <td>{{f.date| date : 'yyyy-MM-dd HH:mm'}}</td>
-                        <td>{{f.totalPrice}}</td>
-                        <td>{{f.traveltime}}</td>
-                        <td>{{f.origin}}</td>
-                        <td>{{f.destination}}</td>
-                        <td>{{f.flightNumber}}</td>
-                        <td><button class="form-control blubtn" ng-click="ctrl.bookTicketsInfo(f)">Book tickets</button></td>
-                    </tr>
-                </tbody>
-            </table>
+    </div>
+    <br>
+    <br>
+    <div ng-repeat="d in ctrl.data" ng-show="ctrl.showme">
+        <h1  style="margin: 1px; background: #e0ebeb;">{{d.airline}}</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>flightID</th>
+                    <th>numberOfSeats</th>
+                    <th>date (Local time in Denmark)</th>
+                    <th>totalPrice</th>
+                    <th>travelTime</th>
+                    <th>origin</th>
+                    <th>destination</th>
+                    <th>flightNumber</th>
+                    <th>action</th>
+                </tr>  
+            </thead>
+            <tbody>
+                <tr ng-repeat="f in d.flights">
+                    <td>{{f.flightID}}</td>
+                    <td>{{f.numberOfSeats}}</td>
+                    <td>{{f.date| date : 'yyyy-MM-dd HH:mm'}}</td>
+                    <td>{{f.totalPrice}}</td>
+                    <td>{{f.traveltime}}</td>
+                    <td>{{f.origin}}</td>
+                    <td>{{f.destination}}</td>
+                    <td>{{f.flightNumber}}</td>
+                    <td><button class="form-control blubtn" ng-click="ctrl.bookTicketsInfo(f)">Book tickets</button></td>
+                </tr>
+            </tbody>
+        </table>
 
-        
     </div>
 
 </div>
