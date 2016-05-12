@@ -19,6 +19,10 @@ body{
     
 }
 
+input{
+    text-align: center;
+}
+
 .topSolid{
     background-color: white;
 }

@@ -1,8 +1,14 @@
-<button class="form-control blubtn" ng-click="ctrl.showUsersFunc()" style="width: 15%; display: inline-block">Show all users</button>
-<button class="form-control blubtn" ng-click="ctrl.showReservationsFunc()" style="width: 15%; display: inline-block">Show all reservations</button>
+<center class="divbox">
+    <button class="form-control blubtn" ng-click="ctrl.showUsersFunc()" style="width: 15%; display: inline-block">Show all users</button>
+    <button class="form-control blubtn" ng-click="ctrl.showReservationsFunc()" style="width: 15%; display: inline-block">Show all reservations</button>
+</center>
+<br>
+<br>
+<br>
 <div ng-show="ctrl.showUsers">
-    <h2>All users</h2>
-    <table class="table table-striped">
+    <h2 style="margin: 1px; background: #555555; color: white; border-radius: 5px; text-align: center;">All users</h2>
+    <br>
+    <table class="table divbox" style="color: white;">
         <thead>
             <tr>
                 <th>
@@ -17,6 +23,7 @@
 
             </tr>
         </thead>
+        
         <tbody>
             <tr ng-repeat="d in ctrl.data">
                 <td>
@@ -34,38 +41,73 @@
 </div>
 
 <div ng-show="ctrl.showReservations">
-    <h2>All reservations</h2>
-    <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>flightNumber</th>
-                        <th>numberOfSeats</th>
-                        <th>date (Local time in Denmark)</th>
-                        <th>totalPrice</th>
-                        <th>flightTime</th>
-                        <th>origin</th>
-                        <th>destination</th>
-                        <th>Reservee name</th>
-                        <th>Passengers</th>
-                        <th>Action</th>
-                    </tr>  
-                </thead>
-                <tbody>
-                    <tr ng-repeat="d in ctrl.data2"> <!-- ng-repeat="f in d.flights"-->
-                        <td>{{d.flightNumber}}</td>
-                        <td>{{d.numberOfSeats}}</td>
-                        <td>{{d.date | date : 'yyyy-MM-dd HH:mm'}}</td>
-                        <td>{{d.totalPrice}}</td>
-                        <td>{{d.flightTime}}</td>
-                        <td>{{d.origin}}</td>
-                        <td>{{d.destination}}</td>
-                        <td>{{d.reserveeName}}</td>
-                        <td>{{d.passengers | pasFilter}}</td>
-                        <td>
-                            <a href="#/view3" ng-click="ctrl.deleteReservation(d.id)">delete</a>
-                        </td>
-                        
-                    </tr>
-                </tbody>
-            </table>
+    <h2 style="margin: 1px; background: #555555; color: white; border-radius: 5px; text-align: center;">All reservations</h2>
+    <br>
+    <table class="table divbox" style="color: white;">
+        <thead>
+            <tr>
+                <th>flightNumber</th>
+                <th>numberOfSeats</th>
+                <th>date (Local time in Denmark)</th>
+                <th>totalPrice</th>
+                <th>flightTime</th>
+                <th>origin</th>
+                <th>destination</th>
+                <th>Reservee name</th>
+                <th>Passengers</th>
+                <th>Airline</th>
+                <th>Action</th>
+            </tr>  
+        </thead>
+        <tbody>
+            <tr ng-repeat="d in ctrl.data2"> <!-- ng-repeat="f in d.flights"-->
+                <td>{{d.flightNumber}}</td>
+                <td>{{d.numberOfSeats}}</td>
+                <td>{{d.date| date : 'yyyy-MM-dd HH:mm'}}</td>
+                <td>{{d.totalPrice}}</td>
+                <td>{{d.flightTime}}</td>
+                <td>{{d.origin}}</td>
+                <td>{{d.destination}}</td>
+                <td>{{d.reserveeName}}</td>
+                <td>{{d.passengers| pasFilter}}</td>
+                <td>{{d.airlineName}}</td>
+                <td>
+                    <a href="#/view3" ng-click="ctrl.deleteReservation(d.id)">delete</a> |
+                    <a href="#/view3" ng-click="ctrl.editWindow(d)">edit</a>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div ng-show="ctrl.editW">
+    <br>
+    <div class="divbox" style="color: white;">
+        flightNumber:
+        <input type="text" ng-model="ctrl.reservation.flightNumber"> <br>
+        <!--        numberOfSeats:
+                <input type="text" ng-model="ctrl.reservation.numberOfSeats"> <br>-->
+        date:
+        <input type="text" ng-model="ctrl.reservation.date"> <br>
+        totalPrice:
+        <input type="text" ng-model="ctrl.reservation.totalPrice"> <br>
+        flightTime:
+        <input type="text" ng-model="ctrl.reservation.flightTime"> <br>
+        origin:
+        <input type="text" ng-model="ctrl.reservation.origin"> <br>
+        destination:
+        <input type="text" ng-model="ctrl.reservation.destination"> <br>
+        reserveeName:
+        <input type="text" ng-model="ctrl.reservation.reserveeName"> <br>
+        passsengers:
+        <div ng-repeat="p in ctrl.reservation.passengers">
+            <input type="text" ng-model="p.firstName"> <br>
+            <input type="text" ng-model="p.lastName"> <br>
+            ---------------------------------------
+        </div>
+        airlineName:
+        <input type="text" ng-model="ctrl.reservation.airlineName"> <br> <br>
+        <button class="form-control blubtn" style="width: 13%;" ng-click="ctrl.editReservation()">Save changes</button>
+    </div>
 </div>

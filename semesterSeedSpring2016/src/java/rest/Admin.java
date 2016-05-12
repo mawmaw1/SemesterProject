@@ -11,8 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -54,7 +56,7 @@ public class Admin {
         }
         return gson.toJson(result);
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/reservations")
@@ -91,28 +93,39 @@ public class Admin {
         return gson.toJson(result);
     }
 
-
     @DELETE
     @Path("/user/{username}")
     @Produces("application/json")
     public String deleteUser(@PathParam("username") String username) {
-        entity.User c = fc.deleteUser(username);     
-         //return gson.toJson(c);
+        entity.User c = fc.deleteUser(username);
+        //return gson.toJson(c);
         JsonObject jo = new JsonObject();
         jo.addProperty("userName", c.getUserName());
         return gson.toJson(jo);
     }
-    
+
     @DELETE
     @Path("/reservation/{id}")
     @Produces("application/json")
     public String deleteReservation(@PathParam("id") int id) {
         Reservation r = fc.deleteReservation(id);
-         //return gson.toJson(c);
+        //return gson.toJson(c);
         JsonObject jo = new JsonObject();
         jo.addProperty("id", r.getId());
         jo.addProperty("airlineName", r.getAirlineName());
         return gson.toJson(jo);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/editReservation")
+    public String editReservation(String reservation) {
+        Reservation r = gson.fromJson(reservation, Reservation.class);
+        r = fc.editReservation(r);
+        JsonObject status = new JsonObject();
+        status.addProperty("status", "succes");
+        return gson.toJson(status);
     }
 
 }

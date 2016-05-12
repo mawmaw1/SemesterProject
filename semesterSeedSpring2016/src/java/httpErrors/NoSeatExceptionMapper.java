@@ -33,7 +33,7 @@ public class NoSeatExceptionMapper implements ExceptionMapper<NoSeatException> {
         JsonObject errorDetail = new JsonObject();
         int statusCode = 405;
         errorDetail.addProperty("code", statusCode);
-        errorDetail.addProperty("message", "Flight is sold out, or not enough available seats.");
+        errorDetail.addProperty("message", e.getMessage());
         error.add("error", errorDetail);
         return Response.status(statusCode).entity(gson.toJson(error)).type(MediaType.APPLICATION_JSON).build();
     }

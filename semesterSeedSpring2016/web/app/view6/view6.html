@@ -1,39 +1,37 @@
-<div>
+<div ng-repeat="d in ctrl.data">
     <h2>All reservations:</h2>
-    
-    <uib-accordion ng-repeat="d in ctrl.data">
-        <uib-accordion-group heading="{{d.airlineName}}" style="margin: 1px; background: #e0ebeb;">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>flightNumber</th>
-                        <th>numberOfSeats</th>
-                        <th>date (Local time in Denmark)</th>
-                        <th>totalPrice</th>
-                        <th>flightTime</th>
-                        <th>origin</th>
-                        <th>destination</th>
-                        <th>Reservee name</th>
-                        <th>Passengers</th>
-                    </tr>  
-                </thead>
-                <tbody>
-                    <tr> <!-- ng-repeat="f in d.flights"-->
-                        <td>{{d.flightNumber}}</td>
-                        <td>{{d.numberOfSeats}}</td>
-                        <td>{{d.date | date : 'yyyy-MM-dd HH:mm'}}</td>
-                        <td>{{d.totalPrice}}</td>
-                        <td>{{d.flightTime}}</td>
-                        <td>{{d.origin}}</td>
-                        <td>{{d.destination}}</td>
-                        <td>{{d.reserveeName}}</td>
-                        <td>{{d.passengers | pasFilter}}</td>
-                        
-                    </tr>
-                </tbody>
-            </table>
+    <div ng-repeat="d in ctrl.data">
+        <h3 style="margin: 1px; background: #555555; color: white; border-radius: 5px; text-align: center;">{{d.airlineName}}</h3>
+        <table class="table divbox" style="color: white;">
+            <thead>
+                <tr>
+                    <th>flightNumber</th>
+                    <th>numberOfSeats</th>
+                    <th>date (Local time in Denmark)</th>
+                    <th>totalPrice</th>
+                    <th>flightTime</th>
+                    <th>origin</th>
+                    <th>destination</th>
+                    <th>Reservee name</th>
+                    <th>Passengers</th>
+                </tr>  
+            </thead>
+            <tbody>
+                <tr> <!-- ng-repeat="f in d.flights"-->
+                    <td>{{d.flightNumber}}</td>
+                    <td>{{d.numberOfSeats}}</td>
+                    <td>{{d.date| date : 'yyyy-MM-dd HH:mm'}}</td>
+                    <td>{{d.totalPrice}}</td>
+                    <td>{{d.flightTime}}</td>
+                    <td>{{d.origin}}</td>
+                    <td>{{d.destination}}</td>
+                    <td>{{d.reserveeName}}</td>
+                    <td>{{d.passengers| pasFilter}}</td>
 
-        </uib-accordion-group>
-    </uib-accordion>
-    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
 </div>

@@ -4,6 +4,7 @@ import entity.Airline;
 import entity.Passenger;
 import entity.Reservation;
 import entity.Role;
+import entity.SearchData;
 import security.IUserFacade;
 import entity.User;
 import java.util.ArrayList;
@@ -96,6 +97,18 @@ public class UserFacade implements IUserFacade {
             em.close();
         }
     }
+    
+    public SearchData saveSearchData(SearchData sd) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(sd);
+            em.getTransaction().commit();
+            return sd;
+        } finally {
+            em.close();
+        }
+    }
 
     public List<entity.User> getUsers() {
         EntityManager em = emf.createEntityManager();
@@ -180,10 +193,24 @@ public class UserFacade implements IUserFacade {
         try {
             Reservation r = em.find(Reservation.class, id);
             em.getTransaction().begin();
-            //em.createQuery("delete from User u where u.userName = :username").setParameter("username", username).executeUpdate();
             em.remove(r);
             em.getTransaction().commit();
-
+            return r;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Reservation editReservation(Reservation r) {
+        EntityManager em = emf.createEntityManager();
+        List<Passenger> pas = r.getPassengers();
+        for (Passenger p : pas) {
+            p.setReservation(r);
+        }
+        try {
+            em.getTransaction().begin();
+            em.merge(r);
+            em.getTransaction().commit();
             return r;
         } finally {
             em.close();
