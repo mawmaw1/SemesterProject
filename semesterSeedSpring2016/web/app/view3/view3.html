@@ -82,32 +82,34 @@
 </div>
 
 <div ng-show="ctrl.editW">
+    <center>
     <br>
     <div class="divbox" style="color: white;">
         flightNumber:
-        <input type="text" ng-model="ctrl.reservation.flightNumber"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.flightNumber"> <br>
         <!--        numberOfSeats:
                 <input type="text" ng-model="ctrl.reservation.numberOfSeats"> <br>-->
         date:
-        <input type="text" ng-model="ctrl.reservation.date"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.date"> <br>
         totalPrice:
-        <input type="text" ng-model="ctrl.reservation.totalPrice"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.totalPrice"> <br>
         flightTime:
-        <input type="text" ng-model="ctrl.reservation.flightTime"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.flightTime"> <br>
         origin:
-        <input type="text" ng-model="ctrl.reservation.origin"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.origin"> <br>
         destination:
-        <input type="text" ng-model="ctrl.reservation.destination"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.destination"> <br>
         reserveeName:
-        <input type="text" ng-model="ctrl.reservation.reserveeName"> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.reserveeName"> <br>
         passsengers:
         <div ng-repeat="p in ctrl.reservation.passengers">
-            <input type="text" ng-model="p.firstName"> <br>
-            <input type="text" ng-model="p.lastName"> <br>
+            <input type="text" class="form-control" style="width: 20%" ng-model="p.firstName"> <br>
+            <input type="text" class="form-control" style="width: 20%" ng-model="p.lastName"> <br>
             ---------------------------------------
         </div>
         airlineName:
-        <input type="text" ng-model="ctrl.reservation.airlineName"> <br> <br>
+        <input type="text" class="form-control" style="width: 20%" ng-model="ctrl.reservation.airlineName"> <br> <br>
         <button class="form-control blubtn" style="width: 13%;" ng-click="ctrl.editReservation()">Save changes</button>
     </div>
+    </center>
 </div>
