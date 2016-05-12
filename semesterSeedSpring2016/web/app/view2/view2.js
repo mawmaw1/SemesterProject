@@ -70,7 +70,7 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
             }, function errorCallback(res) {
                 self.error = res.status + ": " + res.data.statusText;
             });
-            
+
             self.showBooking = false;
             self.showSucces = true;
 
@@ -95,10 +95,10 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
             self.searchData.date = date;
             self.searchData.numberOfSeats = persons;
             GetFactory1.saveSearchData(self.searchData).then(function successCallback(res) {
-                    console.log(res.data);
-                    }, function errorCallback(res) {
-                        self.error = res.status + ": " + res.data.statusText;
-                    });
+                console.log(res.data);
+            }, function errorCallback(res) {
+                self.error = res.status + ": " + res.data.statusText;
+            });
 
             self.showme = false;
             if (to !== from && from !== undefined) {
@@ -164,19 +164,19 @@ app.factory('GetFactory1', ['$http', function ($http) {
         var bookTickets = (function (details, airline, flightID) {
             return bookTickets =
 //                    $http.post('api/data/reservation/airline', details);
-                    $http.post('api/data/reservation/' + airline+"/"+flightID, details);
+                    $http.post('api/data/reservation/' + airline + "/" + flightID, details);
         });
 
         var saveReservation = (function (reservation) {
             return saveReservation =
                     $http.post('api/data/reservation', reservation);
         });
-        
+
         var saveSearchData = (function (searchData) {
             return saveSearchData =
                     $http.post('api/data/searchData', searchData);
         });
-        
+
         return {
             getAllFlightsFromDate: getAllFlightsFromDate,
             getAllFlightsFromToDate: getAllFlightsFromToDate,

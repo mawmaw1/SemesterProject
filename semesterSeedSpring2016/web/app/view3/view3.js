@@ -14,6 +14,7 @@ app.controller('View3Ctrl', ["$http", function ($http) {
         var self = this;
         self.showUsers = false;
         self.showReservations = false;
+        self.editW = false;
         self.getUsers = function (){
             $http.get('api/admin/users')
                 .success(function (data, status, headers, config) {
@@ -53,13 +54,35 @@ app.controller('View3Ctrl', ["$http", function ($http) {
             });
         };
         
+        self.editWindow = function (reservation){
+            console.log("før " + reservation);
+            self.reservation = reservation;
+            self.reservation.user = {};
+            self.reservation.user.username = reservation.username;
+            self.showReservations = false;
+            self.editW = true;
+            console.log("efter " + self.reservation);
+        };
+        
+        self.editReservation = function (){
+            $http.put("api/admin/editReservation", self.reservation).then(function (){
+                console.log("succes");
+                
+                self.editW = false;
+                self.showReservations = true;
+                self.getReservations();
+            });
+        };
+        
         self.showUsersFunc = function (){
            self.showReservations = false;
+           self.editW = false;
            self.showUsers = true;
         };
      
         self.showReservationsFunc = function (){          
            self.showUsers = false;
+           self.editW = false;
            self.showReservations = true;
         };
     }]);

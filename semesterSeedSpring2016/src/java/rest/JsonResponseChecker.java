@@ -16,14 +16,15 @@ public class JsonResponseChecker {
 
     public boolean checkJson(JsonObject object) {
         if (object.get("flights") != null
-                && object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("flightID") != null
-                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("flightNumber") != null
-                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("date") != null
+                && 
+                 object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("date") != null
+                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("destination") != null
+                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("flightID") != null
+                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("flightNumber") != null             
                 || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("numberOfSeats") != null
-                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("totalPrice") != null
-                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("traveltime") != null
                 || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("origin") != null
-                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("destination") != null) {
+                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("totalPrice") != null
+                || object.get("flights").getAsJsonArray().get(0).getAsJsonObject().get("traveltime") != null) {
             return true;
         } else {
             return false;
