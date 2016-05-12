@@ -19,13 +19,13 @@ app.controller('View2Ctrl', ['GetFactory1', 'InfoFactory', '$http', function (Ge
         self.reservation.passengers = [];
         self.showSearch = true;
         self.showBooking = false;
-        self.opt = [
-            'CPH',
-            'STN',
-            'SXF',
-            'CDG',
-            'BCN'
-        ];
+//        self.opt = [
+//            'CPH',
+//            'STN',
+//            'SXF',
+//            'CDG',
+//            'BCN'
+//        ];
 
         self.bookTicketsInfo = function (flight, airlineName) {
             console.log(flight);

@@ -72,26 +72,71 @@
         </span>
 
         <span style="display: inline-block; width: 15%;">
-            <select class="form-control" name="singleSelect" ng-model="ctrl.data.to" ng-options="option for option in ctrl.opt">
+            <select class="form-control" name="singleSelect" ng-model="ctrl.data.to">
                 <option value="" disabled="">Select Destination</option>
+                <option value="CPH">Copenhagen</option>
+                <option value="STN">Stansted, London</option>
+                <option value="ATL">Atlanta</option>
+                <option value="PEK">Beijing, China</option>
+                <option value="DXB">Dubai</option>
+                <option value="ORD">Chicago</option>
+                <option value="HND">Tokyo</option>
+                <option value="LHR">Heathrow, London</option>
+                <option value="LAX">Los Angeles</option>
+                <option value="HKG">Hong Kong</option>
+                <option value="CDG">Paris</option>
+                <option value="DFW">Dallas</option>
+                <option value="IST">Istanbul</option>
+                <option value="FRA">Frankfurt</option>
+                <option value="PVG">Shanghai, China</option>
+                <option value="AMS">Amsterdam</option>
+                <option value="JFK">New York</option>
+                <option value="SIN">Singapore</option>
+                <option value="CAN">Guangzhou Baiyun, China</option>
+                <option value="CGK">Indonesia</option>
+                <option value="DEN">Denver</option>
+                <option value="BKK">Suvarnabhumi, Thailand</option>
+                <option value="SFO">San Francisco</option>
+                <option value="ICN">Seoul</option>
+                <option value="KUL">Kuala Lumpur</option>
+                <option value="MAD">Madrid</option>
+                <option value="DEL">Delhi</option>
+                <option value="LAS">Las Vegas</option>
+                <option value="CLT">Charlotte</option>
+                <option value="MIA">Miami</option>
+                <option value="PHX">Phoenix</option>
+                <option value="IAH">Houston</option>
+                <option value="SEA">Seattle</option>
+                <option value="CTU">Shuangliu, China</option>
+                <option value="YYZ">Toronto</option>
+                <option value="MUC">Munich</option>
+                <option value="BOM">Mumbai</option>
+                <option value="FCO">Fiumicino</option>
+                <option value="LGW">Gatwick, London</option>
+                <option value="SYD">Sydney</option>
+                <option value="SZX">Shenzhen, China</option>
+                <option value="BCN">Barcelona</option>
+                <option value="GRU">São Paulo</option>
+                <option value="SHA">Changning-Minhang, China</option>
+                <option value="MCO">Orlando</option>
+                <option value="TPE">Taiwan</option>
+                <option value="MEX">Mexico City</option>
+                <option value="KMG">Yunnan, China</option>
+                <option value="EWR">Newark</option>
+                <option value="NRT">Narita</option>
+                <option value="MNL">Manila</option>
+                <option value="MSP">Minneapolis</option>
+                <option value="FAE">Faroe Islands</option>
+                <option value="GOH">Nuuk</option>
+                <option value="KEF">Keflavík</option>
+                <option value="OSL">Oslo</option>
+                <option value="ARN">Stockholm</option>
             </select>
         </span>
 
 
-        <script>
-                    $(function () {
-                        $("#datepicker-8").datetimepicker({
-                        });
-                        $("#datepicker-9").datepicker({
-                            prevText: "click for previous months",
-                            nextText: "click for next months",
-                            showOtherMonths: true,
-                            selectOtherMonths: true,
-                            dateFormat: "yyyy-MM-dd HH:mm"
-                        });
-                    });
-        </script>
-        <span style="display: inline-block; width: 12%;">
+        
+        <span style="display: inline-block; width: 17%;">
             <div class="inner-addon left-addon date">
                 <i class="glyphicon glyphicon-calendar"></i>
                 <input type="date" ng-model="ctrl.inputDate" class="form-control">
@@ -115,7 +160,7 @@
 
     </div>
 
-    <div ng-show="ctrl.showBooking">
+    <div ng-show="ctrl.showBooking" class="divbox1">
         <form class="form-signin">
             <div class="row">
                 <div class="col-md-6" style="width: 50%;">
@@ -125,7 +170,7 @@
                     <br>
                     <input class="form-control" type="text" ng-model="ctrl.reservation.reservePhone" placeholder="Reservee phone">
                     <br>
-                    <input class="form-control" type="email" ng-model="ctrl.reservation.reserveeEmail" placeholder="Reservee email">
+                    <input class="form-control" type="text" ng-model="ctrl.reservation.reserveeEmail" placeholder="Reservee email">
 
                 </div>
                 <div class="col-md-6" style="width: 50%;">
@@ -156,7 +201,7 @@
 
 
 
-    <div ng-show="ctrl.showSucces">
+    <div ng-show="ctrl.showSucces" class="inner divbox">
         <center>
             You have succesfully reserved your tickets. Go to the Reservation tab to see your flight details.
         </center>
@@ -165,8 +210,10 @@
     <br>
     <br>
     <div ng-repeat="d in ctrl.data" ng-show="ctrl.showme">
-        <h1  style="margin: 1px; background: #e0ebeb;">{{d.airline}}</h1>
-        <table class="table">
+        <br>
+        <br>
+        <h1  style="margin: 1px; background: #555555; color: white; border-radius: 5px; text-align: center;">{{d.airline}}</h1>
+        <table class="table divbox" style="color: white">
             <thead>
                 <tr>
                     <th>flightID</th>
@@ -194,6 +241,7 @@
                 </tr>
             </tbody>
         </table>
+        
 
     </div>
 

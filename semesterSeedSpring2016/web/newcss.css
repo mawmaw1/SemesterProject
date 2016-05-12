@@ -1,9 +1,17 @@
 html {
     overflow-y: scroll; 
-    background: lightgrey;
+/*    background: lightgrey;*/
+    background-image: url("http://blog.lowvision.com/wp-content/uploads/2015/08/airplane-flight-sunset.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+body{
+    font-family: Capriola, Helvetica, sans-serif;
 }
 .bckgrndimg{
-    background-image: url("http://blog.lowvision.com/wp-content/uploads/2015/08/airplane-flight-sunset.jpg");
+    
     width: 100%;
     height: 100%;
 }
@@ -226,6 +234,29 @@ span.glyphicon-calendar {
     border-bottom-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    
 }
 
+.divbox1{
+    background: #222222;
+    background: -moz-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #222222));
+    background: -webkit-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -o-linear-gradient(top, #555555 0%, #222222 100%);
+    background: -ms-linear-gradient(top, #555555 0%, #222222 100%);
+    background: linear-gradient(to bottom, #555555 0%, #222222 100%);
+    padding: 35px;
+    margin-bottom: auto;
+    margin-top: auto;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: white;
+    
+}
+
+label{
+    color: white;
+}
 
