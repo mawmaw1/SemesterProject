@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import entity.Passenger;
+import entity.Reservation;
 import facades.UserFacade;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,18 +54,64 @@ public class Admin {
         }
         return gson.toJson(result);
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/reservations")
+    public String getReservations() {
+        JsonArray result = new JsonArray();
+        List<Reservation> reservations = fc.getReservations();
+        for (Reservation r : reservations) {
+            JsonObject p1 = new JsonObject();
+            p1.addProperty("id", r.getId());
+            p1.addProperty("flightNumber", r.getFlightNumber());
+            p1.addProperty("origin", r.getOrigin());
+            p1.addProperty("destination", r.getDestination());
+            p1.addProperty("date", r.getDate());
+            p1.addProperty("flightTime", r.getFlightTime());
+            p1.addProperty("numberOfSeats", r.getNumberOfSeats());
+            p1.addProperty("reserveeName", r.getReserveeName());
+            p1.addProperty("totalPrice", r.getTotalPrice());
+            p1.addProperty("airlineName", r.getAirlineName());
+
+            JsonArray passengers = new JsonArray();
+            List<Passenger> p = r.getPassengers();
+            for (Passenger pas : p) {
+                JsonObject p2 = new JsonObject();
+                p2.addProperty("firstName", pas.getFirstname());
+                p2.addProperty("lastName", pas.getLastname());
+                passengers.add(p2);
+            }
+            p1.add("passengers", passengers);
+
+            p1.addProperty("username", r.getUser().getUserName());
+
+            result.add(p1);
+        }
+        return gson.toJson(result);
+    }
 
 
     @DELETE
     @Path("/user/{username}")
     @Produces("application/json")
     public String deleteUser(@PathParam("username") String username) {
-        entity.User c = fc.deleteUser(username);
-        
+        entity.User c = fc.deleteUser(username);     
          //return gson.toJson(c);
-
         JsonObject jo = new JsonObject();
         jo.addProperty("userName", c.getUserName());
+        return gson.toJson(jo);
+    }
+    
+    @DELETE
+    @Path("/reservation/{id}")
+    @Produces("application/json")
+    public String deleteReservation(@PathParam("id") int id) {
+        Reservation r = fc.deleteReservation(id);
+         //return gson.toJson(c);
+        JsonObject jo = new JsonObject();
+        jo.addProperty("id", r.getId());
+        jo.addProperty("airlineName", r.getAirlineName());
         return gson.toJson(jo);
     }
 

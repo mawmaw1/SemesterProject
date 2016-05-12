@@ -2,7 +2,7 @@
     <h2>All reservations:</h2>
     
     <uib-accordion ng-repeat="d in ctrl.data">
-        <uib-accordion-group heading="Reservation" style="margin: 1px; background: #e0ebeb;">
+        <uib-accordion-group heading="{{d.airlineName}}" style="margin: 1px; background: #e0ebeb;">
             <table class="table">
                 <thead>
                     <tr>

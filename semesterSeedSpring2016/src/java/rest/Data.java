@@ -46,7 +46,7 @@ public class Data {
     AirlineConnector ac = new AirlineConnector();
     JsonResponseChecker jrc = new JsonResponseChecker();
     AirlineResponse ar = new AirlineResponse();
-  
+
     @Context
     private UriInfo context;
 
@@ -78,15 +78,16 @@ public class Data {
             for (Future<String> list1 : list) {
 
                 JsonObject jsonObject = (new JsonParser()).parse(list1.get()).getAsJsonObject();
-                
-                //result.add(jsonObject);
-            if (jrc.checkJson(jsonObject) == true) {
-                result.add(jsonObject);
-            }
 
-            }
-        } catch (Exception e) {
-            throw new NoSeatException("Sold Out");
+                //result.add(jsonObject);
+                if (jrc.checkJson(jsonObject) == true) {
+                    result.add(jsonObject);
+                }
+
+           }
+        } 
+        catch (Exception e) {
+           // throw new NoSeatException("Sold Out");
         }
 
         return gson.toJson(result);
@@ -99,25 +100,29 @@ public class Data {
             @PathParam("from") String from,
             @PathParam("to") String to,
             @PathParam("date") String date,
-            @PathParam("persons") int persons) throws InterruptedException, ExecutionException, IOException {
+            @PathParam("persons") int persons) throws InterruptedException, ExecutionException, IOException, NoSeatException {
 
         JsonArray result = new JsonArray();
-        List<Future<String>> list = ac.ConnectToAirlinesFromToDatePersons(from, to, date, persons);
+        try {
+            List<Future<String>> list = ac.ConnectToAirlinesFromToDatePersons(from, to, date, persons);
 
-        for (Future<String> list1 : list) {
+            for (Future<String> list1 : list) {
 
-            JsonObject jsonObject = (new JsonParser()).parse(list1.get()).getAsJsonObject();
+                JsonObject jsonObject = (new JsonParser()).parse(list1.get()).getAsJsonObject();
 
-            //result.add(jsonObject);
-            if (jrc.checkJson(jsonObject) == true) {
-                result.add(jsonObject);
+                //result.add(jsonObject);
+                if (jrc.checkJson(jsonObject) == true) {
+                    result.add(jsonObject);
+                }
+
             }
-
+        } catch (Exception e) {
+            throw new NoSeatException("Sold Out");
         }
 
         return gson.toJson(result);
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("reservation/{username}")
@@ -136,6 +141,7 @@ public class Data {
             p1.addProperty("numberOfSeats", r.getNumberOfSeats());
             p1.addProperty("reserveeName", r.getReserveeName());
             p1.addProperty("totalPrice", r.getTotalPrice());
+            p1.addProperty("airlineName", r.getAirlineName());
 
             JsonArray passengers = new JsonArray();
             List<Passenger> p = r.getPassengers();
@@ -160,8 +166,6 @@ public class Data {
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
-
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -175,12 +179,12 @@ public class Data {
         fc.addPerson(u);
         //   return gson.toJson(u);
     }
-    
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON) /// HUSK FUCKING FLIGHT ID I URL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "Reservation/{flightID}
     @Path("/reservation")
-    public String saveReservation(String reservation) {       
+    public String saveReservation(String reservation) {
         Reservation r = gson.fromJson(reservation, Reservation.class);
         r = fc.saveReservation(r);
         //return gson.toJson(r); <- causes StackOverflow error for some reason. Need to build JsonObject manually if we want the object returned.
@@ -188,14 +192,14 @@ public class Data {
         status.addProperty("status", "succes");
         return gson.toJson(status);
     }
-    
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/reservation/airline")
-    public String getAirlineReservation(String reservation) throws IOException {
-        return ar.getReservationResponse(reservation);
+//    @Path("/reservation/airline")
+    @Path("/reservation/{airline}/{flightID}")
+    public String getAirlineReservation(@PathParam("airline") String airline, @PathParam("flightID") String flightID, String reservation) throws IOException {
+        return ar.getReservationResponse(reservation, airline, flightID);
     }
-
 
 }

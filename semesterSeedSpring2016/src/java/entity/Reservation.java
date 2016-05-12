@@ -39,9 +39,10 @@ public class Reservation implements Serializable {
     private String flightTime;
     private Integer numberOfSeats;
     private String reserveeName;
-    private Integer totalPrice;
+    private Number totalPrice;
+    private String airlineName;
     
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Passenger> passengers;
     
     @ManyToOne
@@ -123,11 +124,11 @@ public class Reservation implements Serializable {
         this.flightTime = flightTime;
     }
 
-    public Integer getTotalPrice() {
+    public Number getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Number totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -137,6 +138,14 @@ public class Reservation implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
     }
     
     
